@@ -1,2 +1,2 @@
 # eliza-weboldal
-Sips Eliza weboldala - fejlesztés AI-val
+Sipos Eliza weboldala - fejlesztés AI-val
