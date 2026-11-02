@@ -1,0 +1,107 @@
+{
+  "directions": [
+    {
+      "id": 1,
+      "slug": "csendes-enido",
+      "name": "Csendes énidő",
+      "description": "Középre rendezett, tágas nyitó szöveg alatt teljes tartalomszélességű kezelési fotó. Levegős kezeléssorok, önálló idézetek, hosszú horizontális ritmus. Krémfelületek dominálnak.",
+      "rationale": "A privát kezelés és a nyugodt énidő élményét helyezi előtérbe.",
+      "contrast_axes": {
+        "density": "spacious",
+        "hero": "centered-text-over-wide-separate-photo",
+        "typography": "large-medium-weight-serif",
+        "rhythm": "horizontal-open-rows",
+        "proof": "standalone-quotes"
+      },
+      "palette": {
+        "primary": "#8E4A5A",
+        "secondary": "#6E3644",
+        "accent": "#C9A27E",
+        "bg": "#FAF6F2",
+        "surface": "#F1E6DF",
+        "text": "#2E2626",
+        "muted": "#6B5F5C"
+      },
+      "fonts": {
+        "heading": {
+          "family": "Cormorant Garamond",
+          "fallback": "Georgia, serif"
+        },
+        "body": {
+          "family": "Jost",
+          "fallback": "system-ui, sans-serif"
+        },
+        "google_fonts_url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap"
+      }
+    },
+    {
+      "id": 2,
+      "slug": "szakerto-kezek",
+      "name": "Szakértő kezek",
+      "description": "Balra igazított szöveg és jobb oldali álló kezelési fotó, 600-as címsorhangsúly. Három szolgáltatáskártya, páros véleményblokk, világos felületváltások és fegyelmezett rács.",
+      "rationale": "Segíti a bizonytalan első vendég döntését, a szakértelmet és az átlátható kezelési folyamatot emeli ki.",
+      "contrast_axes": {
+        "density": "balanced",
+        "hero": "split-text-and-portrait-photo",
+        "typography": "semibold-serif-structured",
+        "rhythm": "modular-alternating-surfaces",
+        "proof": "paired-quotes"
+      },
+      "palette": {
+        "primary": "#8E4A5A",
+        "secondary": "#6E3644",
+        "accent": "#C9A27E",
+        "bg": "#FAF6F2",
+        "surface": "#F1E6DF",
+        "text": "#2E2626",
+        "muted": "#6B5F5C"
+      },
+      "fonts": {
+        "heading": {
+          "family": "Cormorant Garamond",
+          "fallback": "Georgia, serif"
+        },
+        "body": {
+          "family": "Jost",
+          "fallback": "system-ui, sans-serif"
+        },
+        "google_fonts_url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap"
+      }
+    },
+    {
+      "id": 3,
+      "slug": "a-borod-tortenete",
+      "name": "A bőröd története",
+      "description": "Aszimmetrikus, tipográfiával nyitó személyes szépségnapló. Balra rendezett domináns szöveg, kisebb, lejjebb és jobbra húzott fekvő fotó, eltérő szélességű oszlopok, szerkesztett képes kezeléssorok.",
+      "rationale": "Eliza személyes gondoskodását és a vendég egyéni bőrápolási útját teszi emlékezetessé.",
+      "contrast_axes": {
+        "density": "varied-editorial",
+        "hero": "typographic-with-small-offset-photo",
+        "typography": "restrained-serif-hierarchy",
+        "rhythm": "asymmetric-image-and-text-rows",
+        "proof": "open-signed-quotes"
+      },
+      "palette": {
+        "primary": "#8E4A5A",
+        "secondary": "#6E3644",
+        "accent": "#C9A27E",
+        "bg": "#FAF6F2",
+        "surface": "#F1E6DF",
+        "text": "#2E2626",
+        "muted": "#6B5F5C"
+      },
+      "fonts": {
+        "heading": {
+          "family": "Cormorant Garamond",
+          "fallback": "Georgia, serif"
+        },
+        "body": {
+          "family": "Jost",
+          "fallback": "system-ui, sans-serif"
+        },
+        "google_fonts_url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap"
+      }
+    }
+  ],
+  "total": 3
+}
