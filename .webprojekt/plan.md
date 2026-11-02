@@ -1,6 +1,6 @@
 # Weboldal-generálási terv
 
-Állapot: a felhasználó mindhárom koncepcióirányt és megépítésüket jóváhagyta.
+Állapot: a felhasználó mindhárom koncepcióirányt és megépítésüket jóváhagyta. Mindhárom prototípus és a koncepció-navigátor elkészült, böngészős ellenőrzésük megtörtént.
 
 ## Brand brief összefoglaló
 Az Eliza Beauty Salon új weboldala elsősorban a Ráday utca környékén élő vagy dolgozó, 35–55 éves, személyre szabott bőrfiatalítást kereső nőket szólítja meg. Az elsődleges cselekvés az időpontkérés, amelyet Eliza személyesen egyeztet vissza. A mesterkozmetikusi szakértelem, a privát, nyugodt környezet, az otthoni rutin támogatása és az 5 alkalmas kúrához tartozó 50%-os elégedettségi garancia építi a bizalmat. Az anti-akné kezelések külön, könnyen megtalálható útvonalat kapnak.
@@ -60,4 +60,4 @@ Elkészülés után nyisd meg az `index.html` fájlt a böngészőben; onnan min
 - `koncepcio-3-a-borod-tortenete.html`
 
 ## Következő lépés
-A három irány jóváhagyása után mentjük az `iranyok.json` fájlt és a `directions_complete` állapotot, majd felállítjuk a projektet és megépítjük a prototípusokat.
+A felhasználó összehasonlítja a három prototípust, és visszajelzést ad a kedvelt megoldásokról. Ezek alapján következhet a végleges kezdőoldal kialakítása.
