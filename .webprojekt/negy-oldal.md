@@ -17,7 +17,9 @@ A felhasználó által az `images/` mappába tett készletből kiválasztott fot
 | Eredeti fájl | Webes másolat | Használat és indok |
 |---|---|---|
 | pexels-ivan-s-5659052.jpg | soin-lumiere.jpg | Főoldali nagy fotó, világos krém/bézs kezelési környezet |
-| pexels-kerimeveyik-37033485.jpg | soin-douceur.jpg | Személyes gondoskodás és Belico, meleg természetes bőrtónusok |
+| pexels-kerimeveyik-37033485.jpg | soin-douceur.jpg | Kizárólag a Belico kezelési szakasz, meleg természetes bőrtónusok |
+| pexels-104274529-10600179.jpg | arcmasszazs.jpg | Főoldali bemutatkozás, nyugodt személyes gondoskodás |
+| u_19g0ihl6c7-facial-8224799_1920.jpg | szemelyes-gondoskodas.jpg | Rólunk oldal története, púderes-bézs kezelési hangulat |
 | pexels-cottonbro-7582562.jpg | peau-mature.jpg | Mesotica, az érett bőr kezelését mutató, visszafogott kép |
 | pexels-arina-krasnikova-6663390.jpg | routine.jpg | Otthoni arcápolás és Kisokos, meleg semleges háttér |
 | pexels-kerimeveyik-15866050.jpg | relaxation.jpg | Rólunk oldal, nyugodt kezelési hangulat |
@@ -35,4 +37,6 @@ A képek stock illusztrációk: nem Eliza portréi, nem a valódi szalon fotói,
 - A GYIK és a mobilmenü ellenőrizve.
 
 ## Nyitott élesítési feladatok
+A legutóbbi módosítások: a Főoldal hero két rövid helyszín-/figyelemfelirata eltávolítva; a Főoldal és a Kezelések hero alatt hullámvonalas elválasztó van; a Rólunk oldalon külön 14+ / 1300+ / 350+ számblokk szerepel. A nyolc fotó mindegyike az egész webhelyen egyszer jelenik meg. A Kapcsolat hero „Az űrlaphoz” gombja csak legfeljebb 760 px szélességen látszik. A számblokk és a gomb asztali/mobil megjelenése böngészőben ellenőrizve.
+
 A korábbi brief szerint az e-mail-küldés/hírlevélszolgáltatás nincs bekötve, a Kisokos még készül és az adatkezelési szöveg nem végleges. A fiktív elérhetőségeket és az üzleti tartalmat élesítés előtt meg kell erősíteni. A mostani feladat négy összekapcsolt, helyben böngészhető oldal elkészítése volt.
