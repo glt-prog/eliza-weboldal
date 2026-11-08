@@ -49,7 +49,7 @@ Mindkettő ingyenes, a Google Fontsról tölthető be, és van benne magyar éke
 ## Térközök és elrendezés
 
 - Alapegység **8px**: minden térköz ennek többszöröse (8, 16, 24, 32, 48, 64, 96, 128).
-- Szakaszok függőleges térköze: desktopon 96–128px, mobilon 64px.
+- Szakaszok függőleges térköze: desktopon 80px, mobilon 48px, a kiválasztott „Csendes énidő” koncepcióra adott visszajelzés alapján.
 - Tartalom maximális szélessége: 1200px; folyó szöveg max. 680px széles.
 - Oldalsó margó mobilon: 20px.
 

@@ -1,6 +1,19 @@
 # eliza-weboldal
 Sipos Eliza weboldala - fejlesztés AI-val
 
+## Aktuális weboldal
+
+A kiválasztott „Csendes énidő” koncepcióból elkészült a négy összekapcsolt oldal:
+
+- Főoldal: `index.html`
+- Kezelések: `kezelesek.html`
+- Rólunk: `rolunk.html`
+- Kapcsolat: `kapcsolat.html`
+
+A közös megjelenés és működés az `assets/site.css` és `assets/site.js` fájlokban van. A webre optimalizált új stock fotók az `images/web/` mappában találhatók. A kiválasztás és az ellenőrzések részletei: `.webprojekt/negy-oldal.md`.
+
+A korábbi koncepcióválasztó a `koncepciok.html` fájlban maradt meg. Az alábbi koncepcióleírások az előző tervezési fázist dokumentálják; a jelenlegi `index.html` már a Főoldal.
+
 ## Kezdőoldal-koncepciók
 
 A jóváhagyott brief: `.webprojekt/brief.md`. A három irány terve: `.webprojekt/plan.md`.
