@@ -3,22 +3,16 @@ Sipos Eliza weboldala - fejlesztés AI-val
 
 ## Aktuális weboldal
 
-A kiválasztott „Csendes énidő” koncepcióból elkészült a négy összekapcsolt oldal:
+A „Csendes énidő” weboldal publikálási mappája a `public/`. Netlify-on a **Publish directory** értéke `public`.
+Itt található a négy fő oldal, az adatkezelési oldal, a közös CSS és JavaScript, a WebP-fotók, a logó, a favicon és a letölthető Kisokos PDF.
 
-- Főoldal: `index.html`
-- Kezelések: `kezelesek.html`
-- Rólunk: `rolunk.html`
-- Kapcsolat: `kapcsolat.html`
-
-A közös megjelenés és működés az `assets/site.css` és `assets/site.js` fájlokban van. A webre optimalizált új stock fotók az `images/web/` mappában találhatók. A kiválasztás és az ellenőrzések részletei: `.webprojekt/negy-oldal.md`.
-
-A korábbi koncepcióválasztó a `koncepciok.html` fájlban maradt meg. Az alábbi koncepcióleírások az előző tervezési fázist dokumentálják; a jelenlegi `index.html` már a Főoldal.
+A HTML, CSS és JavaScript újragenerálása: `node .webprojekt/build-pages.cjs`. A generátor a `public/` mappába ír.
 
 ## Kezdőoldal-koncepciók
 
 A jóváhagyott brief: `.webprojekt/brief.md`. A három irány terve: `.webprojekt/plan.md`.
 
-Nyisd meg az `index.html` fájlt a böngészőben, és válassz a három kezdőoldal közül:
+Nyisd meg a `koncepciok.html` fájlt a böngészőben, és válassz a három kezdőoldal közül:
 
 - `koncepcio-1-csendes-enido.html`
 - `koncepcio-2-szakerto-kezek.html`

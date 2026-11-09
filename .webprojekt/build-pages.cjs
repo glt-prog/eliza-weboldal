@@ -1,7 +1,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 process.chdir(path.resolve(__dirname, '..'));
-const source = fs.readFileSync('koncepcio-1-csendes-enido.html', 'utf8');
+const publishDir = 'public';
+const source = fs.readFileSync('koncepcio-1-csendes-enido.html', 'utf8')
+  .replace(/((?:src|href)=")public\//g, '$1');
 const sections = [...source.matchAll(/<section\b[\s\S]*?<\/section>/g)].map(m => m[0]);
 const section = name => sections.find(s => new RegExp('class="[^"]*\\b'+name+'\\b').test(s));
 const contact = section('contact');
@@ -23,7 +25,7 @@ function header(page) {
 }
 const footer = navLinks(oldFooter)
   .replace('<a href="#idopont">Kapcsolat</a>', '<a href="kapcsolat.html">Kapcsolat</a>')
-  .replace('<a class="concept-link" href="index.html">Vissza a koncepciókhoz</a>', '<span>Budapest, Ráday utca</span>');
+  .replace('<a class="concept-link" href="koncepciok.html">Vissza a koncepciókhoz</a>', '<span>Budapest, Ráday utca</span>');
 const fontLink = source.match(/<link href="https:\/\/fonts.googleapis.com[^>]+>/)[0];
 // Finom, statikus vonalrajz; a nyitó szakaszok határát jelzi.
 const heroDivider = `<div class="hero-divider" aria-hidden="true"><svg viewBox="0 0 1200 32" preserveAspectRatio="none" fill="none"><path d="M1 16C151 0 251 0 401 16S651 32 801 16S1051 0 1199 16" stroke="currentColor" stroke-width="1.25" vector-effect="non-scaling-stroke"/></svg></div>`;
@@ -31,7 +33,7 @@ function page(file, title, description, content) {
   const html = `<!doctype html>
 <html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title} | Eliza Beauty Salon</title><meta name="description" content="${description}"><meta name="theme-color" content="#FAF6F2"><link rel="icon" href="logo/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>${fontLink}<link rel="stylesheet" href="assets/site.css"><script src="assets/site.js" defer></script></head>
 <body id="fooldal"><a class="skip" href="#tartalom">Ugrás a tartalomra</a>${header(file)}<main id="tartalom">${content}</main>${footer}</body></html>`;
-  fs.writeFileSync(file, html);
+  fs.writeFileSync(path.join(publishDir, file), html);
 }
 function image(name, alt, cls='', eager=false) {
   return `<img class="${cls}" src="images/web/${name}.webp" alt="${alt}" width="1200" height="1800" ${eager?'fetchpriority="high"':'loading="lazy"'}>`;
@@ -42,29 +44,27 @@ function intro(kicker, title, copy, button='Időpontot kérek') {
 function treatment(id, title, lead, copy, items, photo, alt, reverse=false) {
   return `<section class="section ${reverse?'powder':''}" id="${id}"><div class="wrap detail-grid ${reverse?'reverse':''}"><figure>${image(photo,alt,'detail-photo')}<figcaption class="photo-note">Kezelési hangulatkép, stockfotó.</figcaption></figure><div class="detail-copy"><p class="kicker">${lead}</p><h2>${title}</h2><p class="muted">${copy}</p><ul class="treatment-options">${items.map(([name,meta])=>`<li><h3>${name}</h3><p class="muted">${meta}</p></li>`).join('')}</ul><a class="text-link" href="#idopont" data-treatment="${title}">Erről a kezelésről érdeklődöm</a></div></div></section>`;
 }
-fs.mkdirSync('assets',{recursive:true});
+fs.mkdirSync(path.join(publishDir, 'assets'),{recursive:true});
 const css = [...source.matchAll(/<style>([\s\S]*?)<\/style>/g)].map(m=>m[1]).join('\n');
-fs.writeFileSync('assets/site.css', css + `
+fs.writeFileSync(path.join(publishDir, 'assets/site.css'), css + `
 /* A jóváhagyott Csendes énidő közös oldalelemei. */
 html{scroll-padding-top:120px}main section[id]{scroll-margin-top:112px}a[aria-current=page]:not(.brand){color:#8E4A5A;text-decoration:underline;text-underline-offset:8px}button,input,textarea{font:inherit}button{color:inherit}a.btn{color:#fff}a.btn-outline{color:#8E4A5A}.powder{background:#F1E6DF}.page-intro{padding-top:64px;padding-bottom:64px}.page-intro h1{max-width:960px;margin:24px auto}.page-intro .actions{margin-top:32px}.detail-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:center}.detail-grid.reverse figure{order:2}.detail-photo{width:100%;height:520px;object-fit:cover;border-radius:16px}.detail-copy .kicker{margin-bottom:16px}.detail-copy h2{margin-bottom:24px}.detail-copy>p{max-width:620px}.photo-note{font-size:12px;color:#6B5F5C;margin-top:8px}.treatment-options{list-style:none;padding:0;margin:32px 0}.treatment-options li{padding:20px 0;border-top:1px solid #E3D6CF}.treatment-options li:last-child{border-bottom:1px solid #E3D6CF}.treatment-options h3{font-size:24px;margin-bottom:8px}.treatment-options p{font-size:15px}.page-intro+.section{padding-top:32px}.treatment-jumps{display:flex;justify-content:center;gap:16px 32px;flex-wrap:wrap;margin-top:32px;font-size:16px}.treatment-jumps a{color:#8E4A5A;border-bottom:1px solid #E3D6CF;padding-bottom:4px}.more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}.more-grid article{border-top:1px solid #E3D6CF;padding-top:24px}.more-grid h3{margin-bottom:16px}.more-grid p{font-size:17px;color:#6B5F5C}.more-grid .text-link{margin-top:20px}.result-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:16px 48px}.result-list li{padding:16px 0;border-bottom:1px solid #E3D6CF}.package-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.package{padding:32px;border:1px solid #E3D6CF;border-radius:16px;background:#FAF6F2;display:flex;flex-direction:column}.package h3{margin-bottom:16px}.package .price{font-family:var(--font-heading);font-size:40px;color:#6E3644;line-height:1.2;margin-bottom:24px}.package .package-description{font-size:16px;color:#6B5F5C}.package ul{padding-left:20px;font-size:16px;margin:24px 0 32px}.package li+li{margin-top:12px}.package .btn{margin-top:auto;padding-inline:16px}.story{max-width:680px}.story p+p{margin-top:24px}.story h2{margin-bottom:24px}.milestones{display:grid;grid-template-columns:repeat(3,1fr);list-style:none;padding:0;margin:48px 0 0;gap:32px}.milestones li{border-top:1px solid #E3D6CF;padding-top:24px}.milestones time{display:block;font-family:var(--font-heading);font-size:40px;color:#8E4A5A;line-height:1.2;margin-bottom:16px}.milestones p{font-size:16px}.values{list-style:none;padding:0;margin:0}.values li{display:grid;grid-template-columns:1fr 2fr;gap:48px;border-top:1px solid #E3D6CF;padding:28px 0}.values li:last-child{border-bottom:1px solid #E3D6CF}.values p{font-size:17px;color:#6B5F5C}.atmosphere{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center}.atmosphere img,.newsletter-illustration{display:block;width:100%;height:480px;border-radius:16px;object-fit:cover}.atmosphere h2{margin-bottom:24px}.atmosphere p+p{margin-top:24px}.soft-cta{text-align:center;padding:48px;background:#F1E6DF;border-radius:16px}.soft-cta p{margin:24px auto}.soft-cta .btn{margin-top:8px}.contact-page .page-intro{padding-bottom:40px}.contact-page .contact{background:transparent;padding-top:16px}.contact-page .contact-grid{align-items:start}.contact-page .contact-form{padding:32px;background:#F1E6DF;border-radius:16px}.contact-page .contact-copy h2{font-size:32px}.contact-page .contact-details{margin-top:32px}.contact-page .contact-image{height:200px;width:100%;object-fit:cover;object-position:center 58%;border-radius:16px;margin-top:32px}.newsletter-illustration{object-position:center 32%}@media(max-width:760px){.newsletter-illustration{height:auto;aspect-ratio:1.15}}.newsletter-copy .text-link{margin-top:16px}.about .text-link{margin-top:24px}.hero-photo img{object-position:center 61%}.contact-form [aria-invalid=true]{border-color:#8E4A5A}.form-status:focus{outline:2px solid #8E4A5A;outline-offset:4px}
 @media(max-width:1000px){.detail-grid{gap:48px}.package{padding:24px}.package h3{font-size:25px}.package-grid{gap:16px}.atmosphere{gap:40px}}
 @media(max-width:760px){html{scroll-padding-top:104px}main section[id]{scroll-margin-top:96px}.page-intro{padding-top:40px;padding-bottom:40px}.page-intro h1{margin:24px auto}.page-intro+.section{padding-top:16px}.page-intro .actions .btn{width:100%;max-width:360px}.detail-grid,.atmosphere{grid-template-columns:1fr;gap:32px}.detail-grid.reverse figure{order:0}.detail-photo{height:360px}.treatment-jumps{gap:16px 24px;margin-top:24px}.more-grid,.result-list,.package-grid{grid-template-columns:1fr}.more-grid{gap:32px}.package-grid{gap:24px}.package{padding:24px}.package h3{font-size:28px}.package .btn{align-self:flex-start;min-width:200px}.milestones{grid-template-columns:1fr;gap:24px;margin-top:32px}.milestones li{display:grid;grid-template-columns:80px 1fr;gap:24px;align-items:start}.milestones time{font-size:32px;margin:0}.values li{grid-template-columns:1fr;gap:16px;padding:24px 0}.values p{font-size:16px}.atmosphere img{height:360px}.soft-cta{padding:32px 24px}.contact-page .contact-form{padding:24px}.contact-page .contact-image{height:180px}.page-intro p{font-size:16px}.result-list{gap:0}.package .price{font-size:36px}}
 `);
-fs.appendFileSync('assets/site.css', `
+fs.appendFileSync(path.join(publishDir, 'assets/site.css'), `
 .hero-divider{width:min(1200px,calc(100% - 80px));margin:24px auto 0;color:#8E4A5A;opacity:.55}.hero-divider svg{display:block;width:100%;height:32px}.hero-divider+.services{padding-top:40px}.page-intro+.hero-divider{margin-top:0}.contact-page .page-intro .actions{display:none}.trust-stats{background:#F1E6DF}.trust-stats dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;padding:0}.trust-stats dl>div{display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 32px}.trust-stats dl>div+div{border-left:1px solid #D6C5BC}.trust-stats dt{font-family:var(--font-heading);font-size:64px;line-height:1.1;color:#6E3644;font-weight:500}.trust-stats dd{margin:16px 0 0;font-size:18px;color:#6B5F5C}
 @media(max-width:760px){.hero-divider{width:calc(100% - 40px);margin-top:16px}.hero-divider svg{height:24px}.hero-divider+.services{padding-top:32px}.contact-page .page-intro .actions{display:flex}.trust-stats dl{grid-template-columns:1fr}.trust-stats dl>div{padding:24px 0}.trust-stats dl>div+div{border-left:0;border-top:1px solid #D6C5BC}.trust-stats dt{font-size:48px}.trust-stats dd{font-size:16px;margin-top:8px}}
 `);
-fs.appendFileSync('assets/site.css', `.section.trust-stats,.section.about-cta-section{padding-top:40px}.about-cta-section{display:none}@media(max-width:760px){.section.trust-stats,.section.about-cta-section{padding-top:24px}.about-cta-section{display:block}.about-cta-section .btn{display:inline-flex;margin-top:0}}`);
-fs.appendFileSync('assets/site.css', `
+fs.appendFileSync(path.join(publishDir, 'assets/site.css'), `.section.trust-stats,.section.about-cta-section{padding-top:40px}.about-cta-section{display:none}@media(max-width:760px){.section.trust-stats,.section.about-cta-section{padding-top:24px}.about-cta-section{display:block}.about-cta-section .btn{display:inline-flex;margin-top:0}}`);
+fs.appendFileSync(path.join(publishDir, 'assets/site.css'), `
 .privacy-content{max-width:720px}.privacy-content h1{margin-bottom:24px}.privacy-content h2{font-size:30px;margin:40px 0 12px}.privacy-content p+p{margin-top:12px}.privacy-content a{text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.contact-form .check{margin-bottom:8px}.contact-form .privacy-note+.check{margin-top:16px}
 `);
 const js = source.match(/<script>\s*\(function\(\)\{[\s\S]*?<\/script>/)[0].replace(/^<script>|<\/script>$/g,'');
-fs.writeFileSync('assets/site.js', js + `
+fs.writeFileSync(path.join(publishDir, 'assets/site.js'), js + `
 document.querySelectorAll('[data-treatment]').forEach(link=>link.addEventListener('click',()=>{const field=document.querySelector('#contact-message');if(field){field.value='Erről szeretnék érdeklődni: '+link.dataset.treatment+'.';}}));
 window.addEventListener('pageshow',()=>{const toggle=document.querySelector('.menu-toggle'), nav=document.querySelector('.main-nav');if(toggle&&nav){nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');}});
 `);
-// A választó megőrzése, mielőtt a főoldal az index.html helyére kerül.
-if(!fs.existsSync('koncepciok.html'))fs.copyFileSync('index.html','koncepciok.html');
 let home = source.match(/<main id="tartalom">([\s\S]*?)<\/main>/)[1];
 home = home.replace('src="images/kezeles.jpg"','src="images/web/soin-lumiere.webp"')
   .replace('width="1800" height="1200"','width="1200" height="1800"')
