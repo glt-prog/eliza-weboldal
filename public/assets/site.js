@@ -5,7 +5,6 @@ function closeMenu(){nav.classList.remove('is-open');toggle.setAttribute('aria-e
 toggle.addEventListener('click',function(){const opened=toggle.getAttribute('aria-expanded')==='true';nav.classList.toggle('is-open',!opened);toggle.setAttribute('aria-expanded',String(!opened));toggle.innerHTML=opened?'Menü <span aria-hidden="true">☰</span>':'Bezárás <span aria-hidden="true">×</span>';});
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('is-open')){closeMenu();toggle.focus();}});
-document.querySelector('#contact-form')?.addEventListener('submit',e=>{e.preventDefault();document.querySelector('#contact-status').textContent='Ez egy bemutató: az üzenetet nem küldtük el, időpontkérés nem történt. Az adataid nem kerültek továbbításra.';});
 })();
 
 document.querySelectorAll('[data-treatment]').forEach(link=>link.addEventListener('click',()=>{const field=document.querySelector('#contact-message');if(field){field.value='Erről szeretnék érdeklődni: '+link.dataset.treatment+'.';}}));

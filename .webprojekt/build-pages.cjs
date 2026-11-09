@@ -18,7 +18,7 @@ function navLinks(html) {
 const oldHeader = source.match(/<header class="site-header">[\s\S]*?<\/header>/)[0];
 const oldFooter = source.match(/<footer class="footer">[\s\S]*?<\/footer>/)[0];
 function header(page) {
-  const appointmentLink = page === 'adatkezeles.html' ? 'kapcsolat.html#idopont' : '#idopont';
+  const appointmentLink = ['adatkezeles.html', 'koszonjuk.html'].includes(page) ? 'kapcsolat.html#idopont' : '#idopont';
   return navLinks(oldHeader).replace('<a href="#idopont">Kapcsolat</a>', '<a href="kapcsolat.html">Kapcsolat</a>')
     .replace('href="#idopont"', 'href="'+appointmentLink+'"')
     .replace(new RegExp('<a href="'+page.replace('.', '\\.')+'">'), '<a href="'+page+'" aria-current="page">');
@@ -30,6 +30,11 @@ const fontLink = source.match(/<link href="https:\/\/fonts.googleapis.com[^>]+>/
 // Finom, statikus vonalrajz; a nyitó szakaszok határát jelzi.
 const heroDivider = `<div class="hero-divider" aria-hidden="true"><svg viewBox="0 0 1200 32" preserveAspectRatio="none" fill="none"><path d="M1 16C151 0 251 0 401 16S651 32 801 16S1051 0 1199 16" stroke="currentColor" stroke-width="1.25" vector-effect="non-scaling-stroke"/></svg></div>`;
 function page(file, title, description, content) {
+  const formName = 'idopontkeres-' + path.basename(file, '.html');
+  content = content
+    .replace('<form method="post" class="contact-form"', `<form method="post" name="${formName}" data-netlify="true" action="/koszonjuk.html" class="contact-form"`)
+    .replace(/<p class="prototype-note">Ez egy bemutató űrlap:[^<]+<\/p><p class="form-status" id="contact-status"[^>]*><\/p>/,
+      '<p class="small muted">Az időpontot személyesen egyeztetem veled. Kérlek, az üzenetbe ne írj egészségügyi adatot.</p>');
   const html = `<!doctype html>
 <html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${title} | Eliza Beauty Salon</title><meta name="description" content="${description}"><meta name="theme-color" content="#FAF6F2"><link rel="icon" href="logo/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>${fontLink}<link rel="stylesheet" href="assets/site.css"><script src="assets/site.js" defer></script></head>
 <body id="fooldal"><a class="skip" href="#tartalom">Ugrás a tartalomra</a>${header(file)}<main id="tartalom">${content}</main>${footer}</body></html>`;
@@ -60,7 +65,9 @@ fs.appendFileSync(path.join(publishDir, 'assets/site.css'), `.section.trust-stat
 fs.appendFileSync(path.join(publishDir, 'assets/site.css'), `
 .privacy-content{max-width:720px}.privacy-content h1{margin-bottom:24px}.privacy-content h2{font-size:30px;margin:40px 0 12px}.privacy-content p+p{margin-top:12px}.privacy-content a{text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.contact-form .check{margin-bottom:8px}.contact-form .privacy-note+.check{margin-top:16px}
 `);
-const js = source.match(/<script>\s*\(function\(\)\{[\s\S]*?<\/script>/)[0].replace(/^<script>|<\/script>$/g,'');
+const js = source.match(/<script>\s*\(function\(\)\{[\s\S]*?<\/script>/)[0]
+  .replace(/^<script>|<\/script>$/g, '')
+  .replace(/^document\.querySelector\('#contact-form'\).*\r?\n/m, '');
 fs.writeFileSync(path.join(publishDir, 'assets/site.js'), js + `
 document.querySelectorAll('[data-treatment]').forEach(link=>link.addEventListener('click',()=>{const field=document.querySelector('#contact-message');if(field){field.value='Erről szeretnék érdeklődni: '+link.dataset.treatment+'.';}}));
 window.addEventListener('pageshow',()=>{const toggle=document.querySelector('.menu-toggle'), nav=document.querySelector('.main-nav');if(toggle&&nav){nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');}});
@@ -112,4 +119,6 @@ let contactPage = contact.replace('<h2 id="contact-title">Legyen egy kis időd �
   .replace('</dl></div><form', '</dl>'+image('contact','Időpont-egyeztetést idéző részletkép, stockfotó','contact-image')+'</div><form');
 page('kapcsolat.html','Kapcsolat és időpontkérés','Kérj időpontot az Eliza Beauty Salonba. Budapest, Ráday utca 1. Elérhetőségek, nyitvatartás és kapcsolatfelvételi űrlap.', `<div class="contact-page">${intro('Beszéljük át, mire van szükséged','Vedd fel velem a kapcsolatot!','Kérdésed van a kezelésekről, vagy időpontot szeretnél egyeztetni? Írj nekem, és segítek megtalálni a számodra megfelelő megoldást.','Az űrlaphoz')}${contactPage}</div>${faq}`);
 page('adatkezeles.html', 'Adatkezelési tájékoztató', 'Tájékoztató az Eliza Beauty Salon weboldalán történő adatkezelésről.', fs.readFileSync('.webprojekt/adatkezeles.html', 'utf8'));
-console.log('Elkészült: index.html, kezelesek.html, rolunk.html, kapcsolat.html, adatkezeles.html, assets/site.css, assets/site.js');
+page('koszonjuk.html', 'Megkaptam az üzeneted', 'Visszajelzés az Eliza Beauty Salonnak küldött üzenetedről.',
+  `<section class="page-intro wrap center"><h1>Köszönöm, megkaptam az üzeneted!</h1><p class="muted narrow">Hamarosan jelentkezem a megadott e-mail-címen, hogy egyeztessünk.</p><div class="actions"><a class="btn" href="index.html">Vissza a főoldalra</a></div></section>`);
+console.log('Elkészült: index.html, kezelesek.html, rolunk.html, kapcsolat.html, adatkezeles.html, koszonjuk.html, assets/site.css, assets/site.js');
