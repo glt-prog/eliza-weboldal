@@ -34,7 +34,7 @@ function page(file, title, description, content) {
   fs.writeFileSync(file, html);
 }
 function image(name, alt, cls='', eager=false) {
-  return `<img class="${cls}" src="images/web/${name}.jpg" alt="${alt}" width="1200" height="1800" ${eager?'fetchpriority="high"':'loading="lazy"'}>`;
+  return `<img class="${cls}" src="images/web/${name}.webp" alt="${alt}" width="1200" height="1800" ${eager?'fetchpriority="high"':'loading="lazy"'}>`;
 }
 function intro(kicker, title, copy, button='Időpontot kérek') {
   return `<section class="page-intro wrap center"><p class="kicker">${kicker}</p><h1>${title}</h1><p class="muted narrow">${copy}</p><div class="actions"><a class="btn" href="#idopont">${button}</a></div></section>`;
@@ -66,9 +66,9 @@ window.addEventListener('pageshow',()=>{const toggle=document.querySelector('.me
 // A választó megőrzése, mielőtt a főoldal az index.html helyére kerül.
 if(!fs.existsSync('koncepciok.html'))fs.copyFileSync('index.html','koncepciok.html');
 let home = source.match(/<main id="tartalom">([\s\S]*?)<\/main>/)[1];
-home = home.replace('src="images/kezeles.jpg"','src="images/web/soin-lumiere.jpg"')
+home = home.replace('src="images/kezeles.jpg"','src="images/web/soin-lumiere.webp"')
   .replace('width="1800" height="1200"','width="1200" height="1800"')
-  .replace('src="images/rituale.jpg"','src="images/web/arcmasszazs.jpg"')
+  .replace('src="images/rituale.jpg"','src="images/web/arcmasszazs.webp"')
   .replace('Pihentető arcmasszázs részlete, illusztráció','Nyugodt arcmasszázs, stock kezelési hangulatkép')
   .replace('<div class="signature">','<a class="text-link" href="rolunk.html">Ismerd meg Elizát</a><div class="signature">');
 home = home.replace(/href="#kezelesek"/g,'href="kezelesek.html"');
