@@ -4,6 +4,10 @@ process.chdir(path.resolve(__dirname, '..'));
 const publishDir = 'public';
 const siteOrigin = 'https://eliza-beauty.netlify.app';
 const indexableUrls = [];
+const heroSizes = '(max-width: 760px) calc(100vw - 40px), (max-width: 1280px) calc(100vw - 80px), 1200px';
+const aboutSizes = '(max-width: 760px) calc(100vw - 40px), (max-width: 1000px) calc((100vw - 128px) / 2), (max-width: 1280px) calc((100vw - 176px) / 2), 552px';
+const heroSources = 'images/web/soin-lumiere-480.webp 480w, images/web/soin-lumiere-768.webp 768w, images/web/soin-lumiere.webp 1200w';
+const aboutSources = 'images/web/arcmasszazs-480.webp 480w, images/web/arcmasszazs-768.webp 768w, images/web/arcmasszazs.webp 1202w';
 const salonId = siteOrigin + '/#szalon';
 const shareImage = siteOrigin + '/images/web/szemelyes-gondoskodas.webp';
 const source = fs.readFileSync('koncepcio-1-csendes-enido.html', 'utf8')
@@ -118,8 +122,11 @@ function page(file, title, description, content) {
       `<form method="post" name="${formName}" data-netlify="true" netlify-honeypot="bot-field" action="/koszonjuk.html" class="contact-form"$1><div hidden><label>Hagyd üresen ezt a mezőt <input type="text" name="bot-field" autocomplete="off"></label></div>`)
     .replace(/<p class="prototype-note">Ez egy bemutató űrlap:[^<]+<\/p><p class="form-status" id="contact-status"[^>]*><\/p>/,
       '<p class="small muted">Az időpontot személyesen egyeztetem veled. Kérlek, az üzenetbe ne írj egészségügyi adatot.</p>');
+  const heroPreload = file === 'index.html'
+    ? `<link rel="preload" as="image" imagesrcset="${heroSources}" imagesizes="${heroSizes}" fetchpriority="high">`
+    : '';
   const html = `<!doctype html>
-<html lang="hu"><head><meta charset="UTF-8"><!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/38a5d0da96db8ef9bbb767b807a887c4/script.js"></script> <!-- End cookieyes banner --><meta name="viewport" content="width=device-width, initial-scale=1"><title>${fullTitle}</title><meta name="description" content="${description}">${seoTags(file, fullTitle, description)}<meta name="theme-color" content="#FAF6F2"><link rel="icon" href="logo/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>${fontLink}<link rel="stylesheet" href="assets/site.css"><script src="assets/site.js" defer></script></head>
+<html lang="hu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preload" as="style" href="assets/site.css">${heroPreload}<!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/38a5d0da96db8ef9bbb767b807a887c4/script.js"></script> <!-- End cookieyes banner --><title>${fullTitle}</title><meta name="description" content="${description}">${seoTags(file, fullTitle, description)}<meta name="theme-color" content="#FAF6F2"><link rel="icon" href="logo/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>${fontLink}<link rel="stylesheet" href="assets/site.css"><script src="assets/site.js" defer></script></head>
 <body id="fooldal"><a class="skip" href="#tartalom">Ugrás a tartalomra</a>${header(file)}<main id="tartalom">${content}</main>${footer}</body></html>`;
   fs.writeFileSync(path.join(publishDir, file), html);
 }
@@ -157,9 +164,10 @@ document.querySelectorAll('[data-treatment]').forEach(link=>link.addEventListene
 window.addEventListener('pageshow',()=>{const toggle=document.querySelector('.menu-toggle'), nav=document.querySelector('.main-nav');if(toggle&&nav){nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');}});
 `);
 let home = source.match(/<main id="tartalom">([\s\S]*?)<\/main>/)[1];
-home = home.replace('src="images/kezeles.jpg"','src="images/web/soin-lumiere.webp"')
+home = home.replace('src="images/kezeles.jpg"',`src="images/web/soin-lumiere.webp" srcset="${heroSources}" sizes="${heroSizes}"`)
   .replace('width="1800" height="1200"','width="1200" height="1800"')
-  .replace('src="images/rituale.jpg"','src="images/web/arcmasszazs.webp"')
+  .replace('src="images/rituale.jpg"',`src="images/web/arcmasszazs.webp" srcset="${aboutSources}" sizes="${aboutSizes}"`)
+  .replace('width="1200" height="800" loading="lazy"', 'width="1202" height="1800" loading="lazy"')
   .replace('Pihentető arcmasszázs részlete, illusztráció','Nyugodt arcmasszázs, stock kezelési hangulatkép')
   .replace('<div class="signature">','<a class="text-link" href="rolunk.html">Ismerd meg Elizát</a><div class="signature">');
 home = home.replace(/href="#kezelesek"/g,'href="kezelesek.html"');
