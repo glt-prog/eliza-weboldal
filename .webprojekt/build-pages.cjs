@@ -32,7 +32,8 @@ const heroDivider = `<div class="hero-divider" aria-hidden="true"><svg viewBox="
 function page(file, title, description, content) {
   const formName = 'idopontkeres-' + path.basename(file, '.html');
   content = content
-    .replace('<form method="post" class="contact-form"', `<form method="post" name="${formName}" data-netlify="true" action="/koszonjuk.html" class="contact-form"`)
+    .replace(/<form method="post" class="contact-form"([^>]*)>/,
+      `<form method="post" name="${formName}" data-netlify="true" netlify-honeypot="bot-field" action="/koszonjuk.html" class="contact-form"$1><div hidden><label>Hagyd üresen ezt a mezőt <input type="text" name="bot-field" autocomplete="off"></label></div>`)
     .replace(/<p class="prototype-note">Ez egy bemutató űrlap:[^<]+<\/p><p class="form-status" id="contact-status"[^>]*><\/p>/,
       '<p class="small muted">Az időpontot személyesen egyeztetem veled. Kérlek, az üzenetbe ne írj egészségügyi adatot.</p>');
   const html = `<!doctype html>
