@@ -1,5 +1,5 @@
 # eliza-weboldal
-Sipos Eliza weboldala - fejlesztés AI-val
+Sipos Eliza weboldala - fejlesztés AI-val (tanuló projekt)
 
 ## Aktuális weboldal
 
